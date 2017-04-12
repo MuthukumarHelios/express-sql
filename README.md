@@ -10,6 +10,8 @@ Every thing is deveoped from the scratch -->my own scenario
 ##check whether you have already installed with mysql  
 after installed create a database;
 
+create database mobileapp;
+
 for see the database schema you can check the routes/controller.js ==> register action
 
 ---->use Database mobileapp;
