@@ -1,0 +1,21 @@
+
+<h4>hello</h4>
+
+<table>
+<div>
+    <% for(var i=0; i < users.length; i++){ %>
+    <tr>
+    <td><h3> <%= users[i].firstname %> </h3></td>
+    <td><h3> <%= users[i].email %> </h3></td>
+    <td><h3> <%= users[i].lastname %></h3></td>
+    <td><h3><%= users[i].mobile %></h3></td>
+    <td><h3><%= users[i].password %></h3></td>
+
+    <tr>
+    <% } %>
+</div>
+</table>
+<form action="/register" method="post" enctype="multipart/form-data">
+     <input type = "text" name ="rows"/>
+     <input type="submit">
+</form>
