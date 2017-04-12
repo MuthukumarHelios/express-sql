@@ -33,10 +33,9 @@ app.use('/', index);
 app.use('/users', users);
 //routes with controller action
 var controller    =  require('./routes/controller');
-app.get('/test',    controller.test);
-app.post('/hello', controller.hello);
-app.post('/register' ,controller.register);
-app.post('/login', controller.login);
+app.get('/test',      controller.test);
+app.post('/register', controller.register);
+app.post('/login',    controller.login);
 
 var multiparty = require('multiparty');
 

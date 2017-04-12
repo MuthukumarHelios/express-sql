@@ -1,5 +1,7 @@
+//body parser is used to pass the parms in the form-data
 var bodyParser = require("body-parser");
 var mysql      =   require("mysql");
+//uniqid->access_token
 var uniqid = require("uniqid");
 var connection =   mysql.createConnection({
   host : 'localhost',
@@ -7,20 +9,9 @@ var connection =   mysql.createConnection({
   password: 'admin'
 });
 var bcrypt = require('bcrypt');
-var urlencodedParser = bodyParser.urlencoded({ extended: false });
-var data = 'data';//already created database
 connection.query('use mobileapp');
-//controller action
-exports.hello = function(req, res){
-  bcrypt.genSalt(10, function(err, salt){
-  console.log(req.body.password);
-    bcrypt.hash(req.body.password, salt, function(err, hash){
-       console.log(hash);
-    });
-  });
-  res.send("controller action is working fine");
-};
-//the database  existence check
+//controller actions for routes
+//the database  existence check it is present in the
 exports.test = function(req, res){
  connection.query('select * from users', function(err, rows) {
   if(err) throw error;
@@ -31,7 +22,7 @@ exports.test = function(req, res){
  });
 };
 //meant for creating users==>signup
-exports.register = function(req, res, next){
+exports.register = function(req, res){
   //hash the pasword
   console.log("inside controller");
    var salt = bcrypt.genSaltSync(10);
@@ -46,10 +37,11 @@ exports.register = function(req, res, next){
                   //error handled
                  if(err)
                       {
-                        res.send("email already exists");
-                        //return next(err);
+                        res.status(500).json({
+                                        error: "true",
+                                        err_message: "email already exists"});
                        }
-                   res.json(rows);
+                   res.json({err: false, err_message:"suuccess fully inserted"});
                     //res.redirect('/test');
    });
 };
@@ -59,7 +51,7 @@ exports.login = function(req, res){
    var password =  req.body.password;
     var email    =  req.body.email;
      console.log(email);
-      var query = 'select firstname,lastname,email,mobile from users where email = "'+email+'"';
+      var query = 'select firstname,lastname, email, mobile from users where email = "'+email+'"';
            connection.query(query, function(err, rows){
                //encrypt while insert insert into db
                  var salt  =  bcrypt.genSaltSync(10);
@@ -67,7 +59,7 @@ exports.login = function(req, res){
                     console.log(password);
                      bcrypt.compare(password, hash, function (err, callback){
                       console.log(callback);
-                       //check whether the call back is true or not
+                     //check whether the call back is true or not
                         //if email is not present [].length===0
                             if(rows.length != 0){
                               console.log("mailid==>", email);
