@@ -21,6 +21,9 @@ exports.test = function(req, res){
    });
  });
 };
+exports.log = function(req, res){
+   console.log("log function");
+}
 //meant for creating users==>signup
 exports.register = function(req, res){
   //hash the pasword
@@ -41,7 +44,7 @@ exports.register = function(req, res){
                                         error: "true",
                                         err_message: "email already exists"});
                        }
-                   res.json({err: false, err_message:"suuccess fully inserted"});
+                   res.json({error: false, error_message:"suuccess fully inserted"});
                     //res.redirect('/test');
    });
 };
@@ -64,12 +67,15 @@ exports.login = function(req, res){
                             if(rows.length != 0){
                               console.log("mailid==>", email);
                                 if(rows[0].email === email && callback){
-                                var update =
                                  console.log("redirect to login page");
+                                res.json({error: false, error_message:"suuccess fully login"});
                                 }
                             }
-                         else{console.log("redirect to home page");}
+                            else{console.log("redirect to home page not valid");
+                            res.json(
+                                      {error: true,
+                                      error_message:"not valid credentials"});
+                         }
                   });
-            res.send(rows);
        });
 };
