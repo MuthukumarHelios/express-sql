@@ -18,7 +18,15 @@
   },
   "main": "app.js",
   "devDependencies": {},
-  "author": "",
+  "author": "Muthukumar",
   "license": "ISC",
-  "description": ""
+  "description": "simple login page using express and sql",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Muthukumars1994/express-sql.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Muthukumars1994/express-sql/issues"
+  },
+  "homepage": "https://github.com/Muthukumars1994/express-sql#readme"
 }

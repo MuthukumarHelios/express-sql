@@ -34,8 +34,8 @@ var controller    =  require('./routes/controller');
 app.get('/test',      controller.test);
 app.post('/register', controller.register);
 app.post('/login',    controller.login);
-
-var multiparty = require('multiparty');
+app.post('/update',   controller.update);
+console.log(controller.log);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
@@ -51,5 +51,4 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-
 module.exports = app;

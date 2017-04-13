@@ -21,9 +21,10 @@ exports.test = function(req, res){
    });
  });
 };
-exports.log = function(req, res){
+exports.log = function(){
+  //just check the function whether it is working fine with calling
    console.log("log function");
-}
+};
 //meant for creating users==>signup
 exports.register = function(req, res){
   //hash the pasword
@@ -33,12 +34,12 @@ exports.register = function(req, res){
     //encrypt password
      var hash = bcrypt.hashSync(password, salt);
       //meant for call callback
-      var create =
-         'insert into users (firstname, lastname, email, mobile, password, access_token) VALUES ("'+req.body.firstname+'", "'+req.body.lastname+'", "'+req.body.email+'", "'+req.body.mobile+'", "'+hash+'","'+uniqid()+'")';
-            console.log(create);
-              connection.query(create, function (err, rows) {
+       var create =
+          'insert into users (firstname, lastname, email, mobile, password, access_token) VALUES ("'+req.body.firstname+'", "'+req.body.lastname+'", "'+req.body.email+'", "'+req.body.mobile+'", "'+hash+'","'+uniqid()+'")';
+             console.log(create);
+               connection.query(create, function (err, rows) {
                   //error handled
-                 if(err)
+                  if(err)
                       {
                         res.status(500).json({
                                         error: "true",
@@ -60,7 +61,7 @@ exports.login = function(req, res){
                  var salt  =  bcrypt.genSaltSync(10);
                    var hash  =  bcrypt.hashSync(password, salt);
                     console.log(password);
-                     bcrypt.compare(password, hash, function (err, callback){
+                     bcrypt.compare(password, hash, function(err, callback){
                       console.log(callback);
                      //check whether the call back is true or not
                         //if email is not present [].length===0
@@ -78,4 +79,27 @@ exports.login = function(req, res){
                          }
                   });
        });
+};
+exports.update = function(req, res){
+
+  //naresh@pyramidions.in
+     //update the users to perform the access_token
+      // req is access_token if it is equal to the item present in the db
+    var token      =  req.headers.token;
+    var firstname  =  req.body.firstname;
+    var lastname   =   req.body.lastname;
+    var query =
+        'UPDATE users SET firstname="'+firstname+'", lastname = "'+lastname+'" WHERE access_token = "'+token+'"';
+      connection.query(query, function(err, rows){
+        console.log(rows);
+        console.log(rows.affectedRows);
+        console.log("after query");
+           if(err){
+                res.json("error occured");
+              }
+          if(rows.affectedRows!= 0){
+            res.json("updateed success");
+          }
+          else{res.json("cannot updated")}
+    });
 };
