@@ -49,7 +49,6 @@ exports.register = function(req, res){
                     //res.redirect('/test');
    });
 };
-
 exports.login = function(req, res){
     //sql query used for take from total data base
    var password =  req.body.password;
@@ -81,9 +80,7 @@ exports.login = function(req, res){
        });
 };
 exports.update = function(req, res){
-
-  //naresh@pyramidions.in
-     //update the users to perform the access_token
+     //update users to perform the access_token
       // req is access_token if it is equal to the item present in the db
     var token      =  req.headers.token;
     var firstname  =  req.body.firstname;
@@ -97,7 +94,8 @@ exports.update = function(req, res){
            if(err){
                 res.json("error occured");
               }
-          if(rows.affectedRows!= 0){
+          //rows.affectedRows is the json format return form sql command
+          if(rows.affectedRows!== 0){
             res.json("updateed success");
           }
           else{res.json("cannot updated")}
