@@ -35,6 +35,7 @@ app.get('/test',      controller.test);
 app.post('/register', controller.register);
 app.post('/login',    controller.login);
 app.post('/update',   controller.update);
+app.get('/logout/:firstname', controller.logout);
 console.log(controller.log);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
