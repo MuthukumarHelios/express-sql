@@ -31,4 +31,4 @@ for see the database schema you can check the routes/controller.js ==> register 
 
 #npm start
 
--->magic happends in the postman api with login using bcrypt
+-->check the api in  postman
