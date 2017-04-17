@@ -57,38 +57,35 @@ exports.login = function(req, res, next){
      console.log(email);
        var query = 'select firstname, lastname, email, mobile, password from users where email = "'+email+'"';
            connection.query(query, function(err, rows){
-             if(rows.length=== 0)
+             if(rows.length === 0)
                  {
                    res.json({
-                                   error: "true",
+                                   error: true,
                                    err_message: "you cannot login"});
-
                   }
-               else{
+             else
                      bcrypt.compare(password, rows[0].password, function(err1, callback){
-                     if(err)   next(err1);
-                       console.log(callback);
+                      if(err1)   next(err1);
+                                  console.log(password);
                                     console.log(rows[0].password);
                               //check whether the call back is true or not
                               //if email is not present [].length===0
                             if(rows.length != 0){
                               console.log("mailid==>", email);
+                              console.log(rows[0].email === email && callback);
                             if(rows[0].email === email && callback){
                                 console.log("redirect to login page");
                             var update = 'update users set access_token = "'+uniqid()+'" where firstname = "'+rows[0].firstname+'"';
                                 connection.query(update);
                                 res.json({error: false, error_message:"suuccess fully login"});
                                 }
-                            }
-                            else{console.log("redirect to home page not valid");
-                            res.json(
-                                      {error: true,
-                                      error_message:"not valid credentials"}
-                                    );
-                         }
 
+                            else{console.log("redirect to home page not valid");
+                                res.json({error: true,
+                                          error_message:"not valid credentials"});
+                             }
+                            }
                   });
-       }
        });
 };
 exports.update = function(req, res){
